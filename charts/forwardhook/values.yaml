@@ -1,0 +1,22 @@
+# Default values for forwardhook.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+replicaCount: 1
+images:
+  forwardhook: gcr.io/sds-readiness/forwardhook:latest
+  pullPolicy: Always
+service:
+  name: nginx
+  type: ClusterIP
+  externalPort: 8000
+  internalPort: 8000
+resources:
+  limits:
+    cpu: 50m
+    memory: 64Mi
+  requests:
+    cpu: 50m
+    memory: 64Mi
+
+forwardhook_sites: "http://jenkins.default.svc.cluster.local:8080/github-webhook/"
+
