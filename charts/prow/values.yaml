@@ -1,21 +1,136 @@
 # Default values for prow.
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
-replicaCount: 1
-image:
-  repository: nginx
-  tag: stable
-  pullPolicy: IfNotPresent
-service:
-  name: nginx
-  type: ClusterIP
-  externalPort: 80
-  internalPort: 80
-resources:
-  limits:
-    cpu: 100m
-    memory: 128Mi
-  requests:
-    cpu: 100m
-    memory: 128Mi
+
+githubbotname: zonarbot
+jenkinsaddress: ""
+repos:
+  - samsung-cnct.zonarbot
+
+secrets:
+  oauth_token: " 78bfd9d69e0d665d18323c95532c734203d8cc2a"
+  hmac_token: "9ade18f3e0ee81a5343f4a005f795dbaf9ceefd8"
+  jenkins_token: "3153f89466934aadfd7b4faf3734bbdd"
+
+images:
+  crier: jfelten/crier:latest
+  deck: jfelten/deck:latest
+  hook: jfelten/hook:latest
+  horologium: jfelten/horologium:latest
+  line: jfelten/line:latest
+  marque: jfelten/marque:latest
+  sinker: jfelten/sinker:latest
+  splice: jfelten/splice:latest
+  tot: jfelten/tot:latest
+  
+  pullPolicy: Always
+
+crier:
+  replicaCount: 1
+  service:
+    name: crier
+    type: ClusterIP
+    externalPort: 80
+    internalPort: 8888
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+deck:
+  replicaCount: 3
+  service:
+    name: crier
+    type: ClusterIP
+    externalPort: 80
+    internalPort: 8888
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+hook:
+  replicaCount: 4
+  service:
+    name: hook
+    type: ClusterIP
+    externalPort: 80
+    internalPort: 8888
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+horologium:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+marque:
+  replicaCount: 1
+  service:
+    name: marque
+    type: ClusterIP
+    externalPort: 80
+    internalPort: 80
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+sinker:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+splice:
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
+
+tot:
+  persistence: 
+    Enabled: false
+    #StorageClass: generic
+    AccessMode: ReadWriteOnce
+    Size: 1Gi
+  replicaCount: 1
+  service:
+    name: tot
+    type: ClusterIP
+    externalPort: 80
+    internalPort: 8888
+  resources:
+    limits:
+      cpu: 100m
+      memory: 128Mi
+    requests:
+      cpu: 100m
+      memory: 128Mi
 
