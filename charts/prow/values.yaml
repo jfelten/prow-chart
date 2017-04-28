@@ -2,20 +2,48 @@
 # This is a YAML-formatted file.
 # Declare variables to be passed into your templates.
 
-githubbotname: zonarbot
+githubBotAccount: samsungbot
+githubHookConsumerAddress: "http://whatever.com"
 jenkinsaddress: ""
-repos:
-  - samsung-cnct.zonarbot
-
-secrets:
-  oauth_token: " 78bfd9d69e0d665d18323c95532c734203d8cc2a"
-  hmac_token: "9ade18f3e0ee81a5343f4a005f795dbaf9ceefd8"
-  jenkins_token: "3153f89466934aadfd7b4faf3734bbdd"
+repos: 
+  - samsung-cnct/lbex 
+  - samsung-cnct/documentation 
+  - samsung-cnct/k2 
+  - samsung-cnct/terraform-provider-distroimage 
+  - samsung-cnct/flipbit
+  - samsung-cnct/gci-iptables-conf-agent
+  - samsung-cnct/k2-tools
+  - samsung-cnct/kraken-ci-jobs
+  - samsung-cnct/k8s-on-joyent
+  - samsung-cnct/drunkensmee
+  - samsung-cnct/cassandra-container
+  - samsung-cnct/teraform-provider-coreosbox
+  - samsung-cnct/k2cli
+  - samsung-cnct/kraken-services
+  - samsung-cnct/careen-docker
+  - samsung-cnct/technical-onboarding
+  - samsung-cnct/team-opensource
+  - samsung-cnct/nc-pod
+  - samsung-cnct/docs-ghp-staging
+  - samsung-cnct/samsung-cnct.github.io
+  - samsung-cnct/homebrew-terraform-provider-coreosbox
+  - samsung-cnct/mass-ansible-playbook
+  - samsung-cnct/terraform-provider-execute
+  - samsung-cnct/logrotate
+  - samsung-cnct/terraform-provider-coreos
+  - samsung-cnct/careen
+  - samsung-cnct/shared-logging-directory
+  - samsung-cnct/k2-logging-fluentd-daemonset
+  - samsung-cnct/gci-dnsmasq
+  - samsung-cnct/vault
+  - samsung-cnct/kraken
+  - samsung-cnct/consul
 
 images:
   crier: jfelten/crier:latest
   deck: jfelten/deck:latest
   hook: jfelten/hook:latest
+  hook_manager: jfelten/hook_manager:latest
   horologium: jfelten/horologium:latest
   line: jfelten/line:latest
   marque: jfelten/marque:latest

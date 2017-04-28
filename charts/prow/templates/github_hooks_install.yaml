@@ -1,0 +1,36 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: "{{.Release.Name}}"
+  labels:
+    heritage: {{.Release.Service | quote }}
+    release: {{.Release.Name | quote }}
+    chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+  annotations:
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    # secret names required by prow:  oauth, jenkins, hmac
+    "helm.sh/hook": pre-install
+    "helm.sh/hook-weight": "-5"
+spec:
+  template:
+    metadata:
+      name: "{{.Release.Name}}"
+      labels:
+        heritage: {{.Release.Service | quote }}
+        release: {{.Release.Name | quote }}
+        chart: "{{.Chart.Name}}-{{.Chart.Version}}"
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: install-hooks-job
+        image: "{{ .Values.images.hook_manager }}"
+        command: ["/install_hook.sh"]
+        env:
+        - name: BOT_USER_ID
+          value: "{{ .Values.githubBotAccount }}"
+        - name: HOOK_URL
+          value: "{{ .Values.githubHookConsumerAddress }}"
+        - name: REPOS_TO_HOOK
+          value: "( {{ .Values.repos }} )"
+      

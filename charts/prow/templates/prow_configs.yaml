@@ -1,0 +1,130 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ template "fullname" . }}
+data:
+  config: |-
+    ---
+    presubmits:
+      # PR job triggering definitions.
+      # Keys: Full repo name: "org/repo".
+      # Values: List of jobs to run when events occur in the repo.
+      #   name:          Job name.
+      #   trigger:       Regexp commenters can say to trigger the job.
+      #   always_run:    Whether to run for every PR. Default is false. If this is
+      #                  set then your trigger needs to match "@k8s-bot test this".
+      #   context:       GitHub status context.
+      #   rerun_command: How should users trigger just this job, as a string, not a
+      #                  regex. For example, if the trigger regex is "(e2e )?test",
+      #                  then a rerun command might be "e2e test".
+      #   skip_report:   If true, then do not set status or comment on GitHub.
+      #   spec:          If this exists then run a kubernetes pod with this spec.
+      #                  Otherwise, run a Jenkins job.
+      
+      {{ range .Values.repos }}
+      {{ . }}
+        name: "{{ . }}-pipeline"
+        always_run: true
+        context: Jenkins GCE e2e
+        rerun_command: "@prow go"
+        trigger: "@prow go"
+      {{ end }}
+      
+     
+    postsubmits:
+
+    
+    periodics:
+
+  plugins: |-
+      # Plugin repository whitelist.
+      # Keys: Full repo name: "org/repo".
+      # Values: List of plugins to run against the repo.
+      ---
+      google/cadvisor:
+      - trigger
+      
+      kubernetes/charts:
+      - trigger
+      
+      kubernetes/heapster:
+      - trigger
+      
+      kubernetes/kops:
+      - trigger
+      
+      kubernetes/kubernetes:
+      - trigger
+      - release-note
+      
+      kubernetes/test-infra:
+      - trigger
+      - label
+      
+      kubernetes:
+      - assign
+      - cla
+      - close
+      - heart
+      - lgtm
+      - yuks
+      
+      kubernetes-incubator:
+      - cla
+      
+      kubernetes-security/kubernetes:
+      - trigger
+  configure.sh: 
+    #!/bin/sh
+    
+    #configure
+    
+    #plugins
+  create_webhooks.sh: |-
+    #!/bin/sh
+
+    BOT_USER_ID={{ .Values.githubbotaccount }}
+    HOOK_URL="https://blah.blah-blah.com/some_hook_receiver"
+    
+    #first create an auth token
+    $GOPATH/bin/hook_manager create_authorization --account=$BOT_USER_ID --note="bot hook cred"
+    
+    #store the token values as kubernetes secrets
+    eval $(cat github_cred)
+    echo $GITHUB_AUTH_ID >auth_id
+    echo $GITHUB_AUTH_TOKEN >auth_token
+    kubectl create secret generic auth_id --from-file=./auth_id
+    kubectl create secret generic auth_token --from-file=./auth_token
+    
+    #now create webhook on the repos
+    HMAC_KEY=`$GOPATH/bin/hook_manager create_hmac` #used by the webhook security
+    rm -f ./created_hooks
+    {{ range .Values.repos }}
+    HOOK_ID=`$GOPATH/bin/hook_manager create_webhook --credentials=${BOT_USER_ID}:${GITHUB_AUTH_TOKEN} --url=${HOOK_URL} --repo=${repo}`
+    echo "${HOOK_ID}:${repo}" >> created_hooks
+    {{ end }}
+    
+    kubectl create secret generic created_hooks --from-file=./created_hooks
+    
+  delete_webhooks.sh: |-
+    #!/bin/sh
+
+    BOT_USER_ID={{ .Values.githubbotaccount }}
+    #store the token values as shell vairables - created by create script
+    eval $(cat github_cred)
+    
+    ##int the create script we created a text file with each line containing <HOOK_ID>:<REPO>
+    while read hook; do
+        echo "${hook}"
+        values=( ${hook//:/ } ) #split the line into an array
+        echo "$GOPATH/bin/hook_manager delete_webhook --credentials=${BOT_USER_ID}:${GITHUB_AUTH_TOKEN} --hook_id=${values[0]} --repo="${values[1]}"
+    "
+        #now delete each hook
+        $GOPATH/bin/hook_manager delete_webhook --credentials=${BOT_USER_ID}:${GITHUB_AUTH_TOKEN} --hook_id=${values[0]} --repo="${values[1]}"
+    done <./created_hooks
+    
+    #now make sure to remove the created token
+    $GOPATH/bin/hook_manager delete_authorization --account=${BOT_USER_ID} --auth_id=${GITHUB_AUTH_ID}
+    
+
+    
