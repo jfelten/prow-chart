@@ -37,7 +37,7 @@ spec:
         image: {{ .Values.images.hook }}
         imagePullPolicy: Always
         args:
-        - "--github-bot-name={{ .Values.githubbotname }}"
+        - "--github-bot-name={{ .Values.githubBotAccount }}"
         env:
         - name: LINE_IMAGE
           value: "{{ .Values.images.line }}"
@@ -62,10 +62,10 @@ spec:
       volumes:
       - name: hmac
         secret:
-          secretName: prow
+          secretName: hmac
       - name: oauth
         secret:
-          secretName: prow
+          secretName: hookmanager-cred
       - name: config
         configMap:
           name: {{ template "fullname" . }}

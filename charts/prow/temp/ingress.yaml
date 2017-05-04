@@ -34,7 +34,3 @@ spec:
         backend:
           serviceName: {{ template "hook" . }}
           servicePort: {{ .Values.hook.service.externalPort | int }}
-      - path: /.well-known/*
-        backend:
-          serviceName:  {{ template "marque" . }}
-          servicePort: {{ .Values.marque.service.externalPort | int }}
