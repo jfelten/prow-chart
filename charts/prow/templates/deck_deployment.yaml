@@ -38,17 +38,3 @@ spec:
         ports:
           - name: http
             containerPort: 80
-        args:
-        - --jenkins-url=$(JENKINS_URL)
-        env:
-        - name: JENKINS_URL
-          value: {{ .Values.jenkinsaddress }}
-        volumeMounts:
-        - mountPath: /etc/jenkins
-          name: jenkins
-          readOnly: true
-      volumes:
-      - name: jenkins
-        secret:
-          defaultMode: 420
-          secretName: prow
