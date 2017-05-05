@@ -15,16 +15,21 @@
 apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
-  name: ing
+  name: '{{ template "fullname" . }}'
   annotations:
-    "kubernetes.io/ingress.global-static-ip-name": {{ template "fullname" . }}
+    kubernetes.io/ingress.global-static-ip-name: "prow-ingress"
+    kubernetes.io/tls-acme: "true"
+    kubernetes.io/ingress.class: "gce"
   labels:
     chart: "{{ .Chart.Name }}-{{ .Chart.Version }}"
 spec:
   tls:
-  - secretName: prow-k8s-cert
+  - hosts:
+    - prow.cnct.io
+    secretName: prow-cnct-cert
   rules:
-  - http:
+  - host: prow.cnct.io
+    http:
       paths:
       - path: /*
         backend:

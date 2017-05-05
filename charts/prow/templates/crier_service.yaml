@@ -23,5 +23,5 @@ spec:
     app: {{ template "crier" . }}
   ports:
   - port: {{ .Values.crier.service.externalPort }}
-    targetPort: {{ .Values.crier.service.internalPort }}  
+    targetPort: {{ .Values.crier.service.internalPort }}
   type: NodePort
