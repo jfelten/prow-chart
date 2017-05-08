@@ -46,6 +46,7 @@ images:
   hook: jfelten/hook:latest
   hook_manager: jfelten/hook_manager:latest
   horologium: jfelten/horologium:latest
+  lego: jetstack/kube-lego:0.1.3
   line: jfelten/line:latest
   marque: jfelten/marque:latest
   sinker: jfelten/sinker:latest

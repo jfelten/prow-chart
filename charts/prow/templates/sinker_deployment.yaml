@@ -15,3 +15,4 @@ spec:
       containers:
       - name: {{ template "sinker" . }}
         image: "{{ .Values.images.sinker }}"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}

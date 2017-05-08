@@ -35,7 +35,7 @@ spec:
       containers:
       - name: {{ template "hook" . }}
         image: {{ .Values.images.hook }}
-        imagePullPolicy: Always
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
         args:
         - "--github-bot-name={{ .Values.githubBotAccount }}"
         env:

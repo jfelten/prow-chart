@@ -30,6 +30,7 @@ spec:
       containers:
       - name: {{ template "horologium" . }}
         image: "{{ .Values.images.horologium }}"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
         command: ["tail", "-f", "/dev/null"]
         env:
         - name: LINE_IMAGE
