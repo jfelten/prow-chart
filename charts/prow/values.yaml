@@ -89,7 +89,7 @@ hook:
     name: hook
     type: ClusterIP
     externalPort: 8888
-    internalPort: 80
+    internalPort: 8888
   resources:
     limits:
       cpu: 100m
