@@ -17,33 +17,33 @@ We truncate at 24 chars because some Kubernetes name fields are limited to this 
 
 {{- define "tot" -}}
 
-{{- printf "%sprowtot" .Release.Name | trunc 24 | trimSuffix "-" -}}
+{{- printf "tot-%s" .Release.Name | trunc 24 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "splice" -}}
-{{- printf "%s-prowsplice" .Release.Name | trunc 24 | trimSuffix "-" -}}
+{{- printf "splice-%s" .Release.Name | trunc 24 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "sinker" -}}
-{{- printf "%s-prowsinker" .Release.Name | trunc 24 | trimSuffix "-" -}}
+{{- printf "sinker-%s" .Release.Name | trunc 24 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "marque" -}}
-{{- printf "%s-prowmarque" .Release.Name | trunc 24 | trimSuffix "-" -}}
+{{- printf "marque-%s" .Release.Name | trunc 24 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "horologium" -}}
-{{- printf "%s-prowhorologium" .Release.Name | trunc 24 | trimSuffix "-" -}}
+{{- printf "horologium-%s" .Release.Name | trunc 24 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "hook" -}}
-{{- printf "%sprowhook" .Release.Name | trunc 24 | trimSuffix "-" -}}
+{{- printf "hook-%s" .Release.Name | trunc 24 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "deck" -}}
-{{- printf "%sprowdeck" .Release.Name | trunc 24 | trimSuffix "-" -}}
+{{- printf "deck-%s" .Release.Name | trunc 24 | trimSuffix "-" -}}
 {{- end -}}
 
 {{- define "crier" -}}
-{{- printf "%s-prowcrier" .Release.Name | trunc 24 | trimSuffix "-" -}}
+{{- printf "crier-%s" .Release.Name | trunc 24 | trimSuffix "-" -}}
 {{- end -}}
