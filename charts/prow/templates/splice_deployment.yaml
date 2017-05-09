@@ -16,6 +16,7 @@ spec:
       containers:
       - name: "{{ template "splice" . }}"
         image: "{{ .Values.images.splice }}"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
         volumeMounts:
         - name: config
           mountPath: /etc/config

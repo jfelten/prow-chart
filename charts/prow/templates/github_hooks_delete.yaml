@@ -24,6 +24,7 @@ spec:
       containers:
       - name: delete-hooks-job
         image: "{{ .Values.images.hook_manager }}"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
         env:
         - name: BOT_USER_ID
           value: "{{ .Values.githubBotAccount }}"

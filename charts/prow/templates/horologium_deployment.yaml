@@ -30,12 +30,7 @@ spec:
       containers:
       - name: {{ template "horologium" . }}
         image: "{{ .Values.images.horologium }}"
-        command: ["tail", "-f", "/dev/null"]
-        env:
-        - name: LINE_IMAGE
-          value: "{{ .Values.images.line }}"
-        - name: DRY_RUN
-          value: "false"
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
         volumeMounts:
         - name: config
           mountPath: /etc/config

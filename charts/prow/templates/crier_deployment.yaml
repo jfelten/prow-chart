@@ -33,7 +33,7 @@ spec:
         args:
         - "--dry-run=false"
         - "--github-bot-name={{ .Values.githubbotname }}"
-        imagePullPolicy: Always
+        imagePullPolicy: {{ .Values.images.pullPolicy }}
         ports:
           - name: http
             containerPort: {{ .Values.crier.service.internalPort }}
