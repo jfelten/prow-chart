@@ -85,7 +85,7 @@ deck:
       memory: 128Mi
 
 hook:
-  replicaCount: 4
+  replicaCount: 1
   service:
     name: hook
     type: ClusterIP

@@ -31,12 +31,6 @@ spec:
       - name: {{ template "horologium" . }}
         image: "{{ .Values.images.horologium }}"
         imagePullPolicy: {{ .Values.images.pullPolicy }}
-        command: ["tail", "-f", "/dev/null"]
-        env:
-        - name: LINE_IMAGE
-          value: "{{ .Values.images.line }}"
-        - name: DRY_RUN
-          value: "false"
         volumeMounts:
         - name: config
           mountPath: /etc/config

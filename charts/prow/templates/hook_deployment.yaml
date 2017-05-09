@@ -38,11 +38,6 @@ spec:
         imagePullPolicy: {{ .Values.images.pullPolicy }}
         args:
         - "--github-bot-name={{ .Values.githubBotAccount }}"
-        env:
-        - name: LINE_IMAGE
-          value: "{{ .Values.images.line }}"
-        - name: DRY_RUN
-          value: "false"
         ports:
           - name: http
             containerPort: {{ .Values.hook.service.internalPort }}
