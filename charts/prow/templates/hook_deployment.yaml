@@ -38,6 +38,7 @@ spec:
         imagePullPolicy: {{ .Values.images.pullPolicy }}
         args:
         - "--github-bot-name={{ .Values.githubBotAccount }}"
+        - "--trusted-orgs={{ .Values.trustedOrgs }}"
         ports:
           - name: http
             containerPort: {{ .Values.hook.service.internalPort }}

@@ -66,14 +66,6 @@ spec:
         - -storage=/store/tot.json
         ports:
         - containerPort: {{ .Values.tot.service.internalPort }}
-        livenessProbe:
-          httpGet:
-            path: /vend/
-            port: {{ .Values.tot.service.internalPort }}
-        readinessProbe:
-          httpGet:
-            path: /vend/
-            port: {{ .Values.tot.service.internalPort }}
         volumeMounts:
         - mountPath: /store
           name: "store"
