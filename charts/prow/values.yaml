@@ -3,7 +3,7 @@
 # Declare variables to be passed into your templates.
 
 githubBotAccount: samsungbot
-trustedOrgs: samsung_cnct, kubernetes
+trustedOrgs: samsung-cnct, kubernetes
 githubHookConsumerAddress: "https://prow.cnct.io/hook"
 jenkinsaddress: ""
 repos: 
